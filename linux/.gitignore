@@ -1,0 +1,8 @@
+flutter/ephemeral
+android/local.properties
+build/
+.dart_tool/
+.idea/
+.symlinks/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig

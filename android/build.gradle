@@ -1,0 +1,23 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Define a plain directory outside android/
+def newBuildDir = file("../build")
+
+// Set root build directory
+rootProject.buildDir = newBuildDir
+
+subprojects {
+    // Give each module its own subdirectory
+    buildDir = new File(newBuildDir, project.name)
+    project.evaluationDependsOn(":app")
+}
+
+// clean task
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
