@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'leaderboard_screen.dart';
+import 'package:treasure_hunt/pages/leaderboard_screen.dart';
 
 class ClueScreen extends StatefulWidget {
   const ClueScreen({super.key});

@@ -2,14 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+class DetailScreen extends StatefulWidget {
+  const DetailScreen({super.key, this.hunt});
+  final dynamic hunt;
 
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: PreferredSize(
-          preferredSize: const Size.fromHeight(20), 
+          preferredSize: const Size.fromHeight(20),
           child: BottomAppBar(
             color: const Color(0xFF0f1c22),
             padding: EdgeInsets.zero, // remove default padding
@@ -27,7 +33,40 @@ class DetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                     child: Padding(
                       padding: const EdgeInsets.all(6),
-                      child: Icon(Icons.share, size: 18, color: Colors.white),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(
+                                  255, 67, 67, 67), // background color
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.share,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(
+                                  255, 67, 67, 67), // background color
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.favorite_border_outlined,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -41,7 +80,7 @@ class DetailScreen extends StatelessWidget {
               Stack(
                 children: [
                   CachedNetworkImage(
-                    imageUrl:
+                    imageUrl: widget.hunt['image'] ??
                         "https://lh3.googleusercontent.com/aida-public/AB6AXuBS15XDBk2yEBEwPuzZExAUXpPjnoNbWD7VIQcTU1vh1WLGgFEjHYO_WsM_vot94U_mpQue2jtkxtNEdyHpbwrInW74dDLO-J49xf7Mr54qU2YTWpbIK4jGJELMIw5KHcCSxh2Tr23fC0J8RIgQ-fULe5ToAwtb6aTJX30JUNxxS8FDYRuoBmbSOn6VIqwwa1EKo93hDR6eTPYHrlNUfMtZE06sgDSKk2GW4TeGqs9zmCoXD27V6e_ESIGAeO2NxUfKehM_VU4WuX8",
                     height: 200, // 👈 matches parent card height better
                     fit: BoxFit.cover,
@@ -63,7 +102,7 @@ class DetailScreen extends StatelessWidget {
                     left: 12,
                     right: 12,
                     child: Text(
-                      'Ibadan Treasure Hunt',
+                      widget.hunt['title'] ?? 'Treasure Hunt in Ibadan',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,

@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:treasure_hunt/screens/home_screen.dart';
+import 'package:treasure_hunt/pages/home_screen.dart';
 import 'package:treasure_hunt/widgets/custom_buttons.dart';
 import 'package:treasure_hunt/widgets/social_buttons.dart';
+import 'package:treasure_hunt/widgets/widget_tree.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
+
+  void _navigateToHome(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => const WidgetTree(),
+        transitionDuration: Duration.zero, // Instant transition
+        reverseTransitionDuration: Duration.zero,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +58,13 @@ class WelcomeScreen extends StatelessWidget {
                     CustomButton(
                       label: 'Create Account',
                       type: ButtonType.primary,
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: () => _navigateToHome(context)
                     ),
                     const SizedBox(height: 20),
                     CustomButton(
                       label: 'Sign In',
                       type: ButtonType.secondary,
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
-                          ),
-                        );
-                      },
+                      onPressed: () => _navigateToHome(context)
                     ),
                     const SizedBox(height: 20),
                     Text(

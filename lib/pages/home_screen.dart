@@ -12,45 +12,38 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List ongoingHunts = [];
-  List upcomingHunts = [];
-  List pastHunts = [];
-  bool isLoading = true;
+class _HomeScreenState extends State<HomeScreen>
+    with AutomaticKeepAliveClientMixin {
+  late final Future<List<dynamic>> _huntsFuture;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _getHunts());
+    _huntsFuture = _fetchHunts();
   }
 
-  Future<void> _getHunts() async {
-    try {
-      final huntService = HuntService();
-
-      final results = await Future.wait([
-        huntService.getHunts('ongoing'),
-        huntService.getHunts('upcoming'),
-        huntService.getHunts('past'),
-      ]);
-
-      setState(() {
-        ongoingHunts = results[0];
-        upcomingHunts = results[1];
-        pastHunts = results[2];
-        isLoading = false;
-      });
-      print('past hunts: $pastHunts');
-    } catch (e) {
-      print(e);
-      setState(() {
-        isLoading = false;
-      });
-    }
+  Future<List<dynamic>> _fetchHunts() async {
+  try { 
+    final huntService = HuntService();
+    final results = await Future.wait([
+      huntService.getHunts('upcoming'),
+      huntService.getHunts('ongoing'),
+      huntService.getHunts('past'),
+    ]);
+    return results;
+  } catch (e) { 
+    print('Error in _fetchHunts: $e'); 
+    rethrow; 
   }
+}
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -96,22 +89,47 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(top: 20), // 👈 adds space below AppBar
-          child: TabBarView(
-            children: [
-              isLoading
-                  ? const HuntListShimmer()
-                  : HuntList(
-                      hunts: upcomingHunts, emptyText: "No upcoming hunts"),
-              isLoading
-                  ? const HuntListShimmer()
-                  : HuntList(
-                      hunts: ongoingHunts, emptyText: "No ongoing hunts"),
-              isLoading
-                  ? const HuntListShimmer()
-                  : HuntList(hunts: pastHunts, emptyText: "No past hunts"),
-            ],
-          ),
+          padding: const EdgeInsets.only(top: 20),
+          child: FutureBuilder(
+              future: _huntsFuture,
+              builder: (context, snapshot) {
+                print(snapshot.connectionState);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const TabBarView(
+                    children: [
+                      HuntListShimmer(),
+                      HuntListShimmer(),
+                      HuntListShimmer(),
+                    ],
+                  );
+                }
+
+                if (snapshot.hasError) {
+                  print("Error loading hunts: ${snapshot.error}");
+                  // Show a simple error message
+                  return const Center(
+                    child: Text(
+                      "Failed to load hunts. Please try again.",
+                      style: TextStyle(color: Colors.white70),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
+
+                final upcomingHunts = snapshot.data![0];
+                final ongoingHunts = snapshot.data![1];
+                final pastHunts = snapshot.data![2];
+
+                return TabBarView(
+                  children: [
+                    HuntList(
+                        hunts: upcomingHunts, emptyText: "No upcoming hunts"),
+                    HuntList(
+                        hunts: ongoingHunts, emptyText: "No ongoing hunts"),
+                    HuntList(hunts: pastHunts, emptyText: "No past hunts"),
+                  ],
+                );
+              }),
         ),
       ),
     );
@@ -176,10 +194,10 @@ class HuntCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: () {
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const DetailScreen(),
+            builder: (context) => DetailScreen(hunt: hunt),
           ),
         );
       },
@@ -291,7 +309,14 @@ class HuntCard extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailScreen(hunt: hunt),
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF17a3eb),
                         foregroundColor: Colors.white,
@@ -313,7 +338,6 @@ class HuntCard extends StatelessWidget {
     );
   }
 }
-
 
 class HuntListShimmer extends StatelessWidget {
   const HuntListShimmer({super.key});

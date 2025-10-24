@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:treasure_hunt/screens/home_screen.dart';
+import 'package:treasure_hunt/pages/home_screen.dart';
 import 'package:treasure_hunt/screens/welcome_screen.dart';
 import 'register_screen.dart';
 
