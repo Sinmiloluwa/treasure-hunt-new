@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:treasure_hunt/screens/hunt_details_screen.dart';
 
 class LeaderboardScreen extends StatelessWidget {
   const LeaderboardScreen({super.key});
@@ -45,11 +46,18 @@ class LeaderboardScreen extends StatelessWidget {
 
                   final String status =
                      DateFormat('MMM d, yyyy').format(completedDate);
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 15.0), // Apply spacing here
-                    child: leaderboardEntry(
-                        'Hunt ${index + 1}', status, index + 1),
+                  return InkWell(
+                    onTap: () => {
+                      Navigator.push(context, 
+                      MaterialPageRoute(builder: (context) => HuntDetailsScreen(huntId: index + 1)
+                      ))
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 15.0), // Apply spacing here
+                      child: leaderboardEntry(
+                          'Hunt ${index + 1}', status, index + 1),
+                    ),
                   );
                 },
               ),

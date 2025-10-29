@@ -13,7 +13,7 @@ class TreasureHuntApp extends StatelessWidget {
     return MaterialApp(
       title: 'Treasure Hunt',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
+      theme: ThemeData( 
         brightness: Brightness.dark,
         fontFamily: 'Jakarta',
         primaryColor: const Color(0xFF0f1c22),
