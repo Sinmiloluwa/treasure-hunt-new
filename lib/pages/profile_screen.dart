@@ -82,11 +82,11 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const DefaultTabController(
+            DefaultTabController(
                 length: 3,
                 child: Column(
                   children: [
-                    const TabBar(
+                    TabBar(
                       indicatorColor: Color(0xFF17a3eb),
                       tabs: [
                         Tab(
@@ -128,11 +128,7 @@ class ProfileScreen extends StatelessWidget {
                       height: 400,
                       child: TabBarView(
                         children: [
-                          Center(
-                              child: Text(
-                            'Account Settings',
-                            style: TextStyle(color: Colors.white),
-                          )),
+                          _buildGeneralTab(),
                           Center(
                               child: Text(
                             'Preferences Settings',
@@ -147,9 +143,112 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ],
-                ))
+                )),
+            const SizedBox(
+              height: 20,
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildGeneralTab() {
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text(
+                  'Username',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8), // spacing between label and field
+              TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.black,
+                  hintText: 'Tolu Amole',
+                  hintStyle: const TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
+
+              const SizedBox(height: 12),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text(
+                  'Email',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8), // spacing between label and field
+              TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.black,
+                  hintText: 'toluwanimi@gmail.com',
+                  hintStyle: const TextStyle(color: Colors.white),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
+
+              const SizedBox(height: 14),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(20), // same border radius
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Text(
+                        'Change Password',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Icon(Icons.chevron_right, color: Colors.white),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+            ],
+          )
+        ],
       ),
     );
   }
