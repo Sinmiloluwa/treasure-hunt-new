@@ -3,6 +3,8 @@
         android:label="treasure_hunt_new"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="YOUR KEY HERE"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,6 +22,8 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+              <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBsOmDmGIhNPlhiGklYMDq7b7C-4FlKRpU"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
