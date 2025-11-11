@@ -5,12 +5,14 @@ class SocialButton extends StatelessWidget {
   final String assetPath;
   final Color backgroundColor;
   final VoidCallback onTap;
+  final String text;
 
   const SocialButton({
     super.key,
     required this.assetPath,
     required this.backgroundColor,
     required this.onTap,
+    required this.text,
   });
 
   @override
@@ -21,20 +23,31 @@ class SocialButton extends StatelessWidget {
         scale: 1,
         duration: const Duration(milliseconds: 200),
         child: Container(
-          width: 56,
-          height: 56,
+          width: 108,
+          height: 42,
           decoration: BoxDecoration(
             color: backgroundColor,
-            shape: BoxShape.circle,
+            border: Border.all(color: const Color(0xFF933DFC), width: 1.5),
+            borderRadius: BorderRadius.circular(15),
           ),
-          child: Center(
-            child: SvgPicture.asset(
-              assetPath,
-              width: 24,
-              height: 24,
-              colorFilter:
-                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SvgPicture.asset(
+                assetPath,
+                width: 24,
+                height: 24,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              ),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
         ),
       ),

@@ -27,11 +27,20 @@ class _WidgetTreeState extends State<WidgetTree> {
     });
   }
 
+  final List<Widget> _pages = const [
+    HomeScreen(),
+    LeaderboardScreen(),
+    MapScreen(),
+    ProfileScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0f1c22),
-      body: pages[_selectedIndex],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           splashColor: Colors.transparent,

@@ -16,8 +16,11 @@ class TreasureHuntApp extends StatelessWidget {
       theme: ThemeData( 
         brightness: Brightness.dark,
         fontFamily: 'Jakarta',
-        primaryColor: const Color(0xFF0f1c22),
-        scaffoldBackgroundColor: const Color(0xFF0f1c22),
+        colorScheme: const ColorScheme.dark(
+          primary: Colors.black,
+          surface: Colors.black,
+          secondary: Colors.white,
+        ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF0f1c22),

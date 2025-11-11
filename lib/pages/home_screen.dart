@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:treasure_hunt/constants/text_styles.dart';
 import 'package:treasure_hunt/screens/detail_screen.dart';
 import 'package:treasure_hunt/services/hunt_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,127 +13,66 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
-    with AutomaticKeepAliveClientMixin {
-  late final Future<List<dynamic>> _huntsFuture;
-
-  @override
-  bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-    _huntsFuture = _fetchHunts();
-  }
-
-  Future<List<dynamic>> _fetchHunts() async {
-  try { 
-    final huntService = HuntService();
-    final results = await Future.wait([
-      huntService.getHunts('upcoming'),
-      huntService.getHunts('ongoing'),
-      huntService.getHunts('past'),
-    ]);
-    return results;
-  } catch (e) { 
-    print('Error in _fetchHunts: $e'); 
-    rethrow; 
-  }
-}
-
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Scavenger Hunts",
-              style: TextStyle(
-                  fontFamily: 'Jakarta', fontWeight: FontWeight.bold)),
-          backgroundColor: const Color(0xFF0f1c22),
-          bottom: const TabBar(
-            indicatorColor: Color(0xFF17a3eb),
-            tabs: [
-              Tab(
-                child: Text(
-                  "Upcoming",
-                  style: TextStyle(
-                    color: Colors.grey, // 👈 specific color for “Upcoming”
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Jakarta',
-                  ),
-                ),
-              ),
-              Tab(
-                child: Text(
-                  "Ongoing",
-                  style: TextStyle(
-                    color: Colors.grey, // 👈 specific color for “Ongoing”
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Jakarta',
-                  ),
-                ),
-              ),
-              Tab(
-                child: Text(
-                  "Past",
-                  style: TextStyle(
-                    color: Colors.grey, // 👈 specific color for “Past”
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Jakarta',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: FutureBuilder(
-              future: _huntsFuture,
-              builder: (context, snapshot) {
-                print(snapshot.connectionState);
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const TabBarView(
-                    children: [
-                      HuntListShimmer(),
-                      HuntListShimmer(),
-                      HuntListShimmer(),
-                    ],
-                  );
-                }
-
-                if (snapshot.hasError) {
-                  print("Error loading hunts: ${snapshot.error}");
-                  // Show a simple error message
-                  return const Center(
-                    child: Text(
-                      "Failed to load hunts. Please try again.",
-                      style: TextStyle(color: Colors.white70),
-                      textAlign: TextAlign.center,
-                    ),
-                  );
-                }
-
-                final upcomingHunts = snapshot.data![0];
-                final ongoingHunts = snapshot.data![1];
-                final pastHunts = snapshot.data![2];
-
-                return TabBarView(
+    return SafeArea(
+        child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HuntList(
-                        hunts: upcomingHunts, emptyText: "No upcoming hunts"),
-                    HuntList(
-                        hunts: ongoingHunts, emptyText: "No ongoing hunts"),
-                    HuntList(hunts: pastHunts, emptyText: "No past hunts"),
-                  ],
-                );
-              }),
-        ),
-      ),
-    );
+                    const SizedBox(height: 16),
+                    Center(
+                      child: const Text('Upcoming Hunts',
+                          style: AppTextStyles.heading),
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Popular Hunts', style: AppTextStyles.subheading),
+                        ElevatedButton(
+                          onPressed: () {
+                            print('Filter button tapped');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF933DFC),
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10.0),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize
+                                .min, // Keep the Row size tight to its children
+                            children: const [
+                              Text(
+                                'Filter',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              SizedBox(width: 8), // Space between text and icon
+                              // The filter icon (using Icons.settings_input_component or similar)
+                              Icon(
+                                Icons.settings_input_component,
+                                size: 20,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ]),
+            )));
   }
 }
 

@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                   bottom: 8,
                   right: 8,
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.blueAccent,
                       shape: BoxShape.circle,
                     ),
@@ -86,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
                 length: 3,
                 child: Column(
                   children: [
-                    TabBar(
+                    const TabBar(
                       indicatorColor: Color(0xFF17a3eb),
                       tabs: [
                         Tab(
