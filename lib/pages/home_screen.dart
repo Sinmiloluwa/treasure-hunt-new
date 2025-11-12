@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:treasure_hunt/constants/text_styles.dart';
 import 'package:treasure_hunt/screens/detail_screen.dart';
+import 'package:treasure_hunt/screens/hunt_details_screen.dart';
 import 'package:treasure_hunt/services/hunt_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -20,59 +21,253 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 16),
-                    Center(
-                      child: const Text('Upcoming Hunts',
-                          style: AppTextStyles.heading),
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('Popular Hunts', style: AppTextStyles.subheading),
-                        ElevatedButton(
-                          onPressed: () {
-                            print('Filter button tapped');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF933DFC),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  10.0),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize
-                                .min, // Keep the Row size tight to its children
-                            children: const [
-                              Text(
-                                'Filter',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 16),
+                      Center(
+                        child: const Text('Scavenger Hunts',
+                            style: AppTextStyles.heading),
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Popular Hunts',
+                              style: AppTextStyles.subheading),
+                          ElevatedButton(
+                            onPressed: () {
+                              print('Filter button tapped');
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF933DFC),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 12),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              SizedBox(width: 8), // Space between text and icon
-                              // The filter icon (using Icons.settings_input_component or similar)
-                              Icon(
-                                Icons.settings_input_component,
-                                size: 20,
+                              elevation: 0,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize
+                                  .min, // Keep the Row size tight to its children
+                              children: const [
+                                Text(
+                                  'Filter',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(
+                                    width: 8), // Space between text and icon
+                                // The filter icon (using Icons.settings_input_component or similar)
+                                Icon(
+                                  Icons.settings_input_component,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 40),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: const [
+                                CardWidget(),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 30),
+                      const Text('Featured Hunts', style: AppTextStyles.subheading),
+                      const SizedBox(height: 40),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: const [
+                                CardWidget(),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ]),
+              ),
+            )));
+  }
+}
+
+class CardWidget extends StatelessWidget {
+  const CardWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const HuntDetailsScreen(huntId: 1)));
+        },
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: const Color(0xFF1b2327),
+            borderRadius: BorderRadius.circular(16.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 15,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  // Image
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(16),
+                      topRight: Radius.circular(16),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                          'https://images.unsplash.com/photo-1668350965114-c366c30cfb13?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1035',
+                      height: 180,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Container(
+                        height: 180,
+                        color: Colors.grey[200],
+                        child: const Center(
+                            child: CircularProgressIndicator()),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          Container(
+                        height: 180,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.broken_image,
+                            size: 48, color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                  // Positioned title and location
+                  const Positioned(
+                    right: 12,
+                    top: 12,
+                    child: Icon(Icons.bookmark_border_outlined,
+                        color: Colors.white),
+                  ),
+                ],
+              ),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        children: [
+                           Text(
+                                'City Park',
+                                style: AppTextStyles.cardTitle,
+                              ),
+                          const SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                            children: [ 
+                              Row(
+                                children: [
+                                  Icon(Icons.people,
+                                      size: 16,
+                                      color: Colors.black,
+                                      semanticLabel: 'People',
+                                      ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    "5,000",
+                                    style: AppTextStyles.cardSubtitle,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.timer,
+                                      size: 16,
+                                      color: Colors.black,
+                                      semanticLabel: 'Time',
+                                      ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    "14:00 - 16:00",
+                                    style: AppTextStyles.cardSubtitle,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on,
+                                      size: 16,
+                                      color: Colors.black,
+                                      semanticLabel: 'Location',
+                                      ),
+                                  SizedBox(width: 4),
+                                  Text(
+                                    "Bodija Ashi",
+                                    style: AppTextStyles.cardSubtitle,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                  ]),
-            )));
+                    const SizedBox(height: 12),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

@@ -13,7 +13,7 @@ class AppTextStyles {
     fontSize: 18,
     fontFamily: 'Jakarta',
     fontWeight: FontWeight.w600,
-    color: Colors.white70,
+    color: Colors.white,
     decoration: TextDecoration.none,
   );
 
@@ -22,6 +22,22 @@ class AppTextStyles {
     fontFamily: 'Jakarta',
     fontWeight: FontWeight.normal,
     color: Colors.white70,
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle cardTitle = TextStyle(
+    fontSize: 16,
+    fontFamily: 'Jakarta',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
+
+  static const TextStyle cardSubtitle = TextStyle(
+    fontSize: 12,
+    fontFamily: 'Jakarta',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
     decoration: TextDecoration.none,
   );
 }

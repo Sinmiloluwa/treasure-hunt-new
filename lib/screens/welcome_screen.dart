@@ -37,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
                 const Text(
-                  'Let\'s Get Started',
+                  'Let\'s get the hunting started',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 28,
