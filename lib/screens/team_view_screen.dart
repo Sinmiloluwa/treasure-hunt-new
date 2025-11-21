@@ -150,7 +150,7 @@ class TeamViewScreen extends StatelessWidget {
             onPressed: (){
               showDialog(
               context: context,
-              builder: (context) => AlertDialog(
+              builder: (dialogContext) => AlertDialog(
                 title: const Text('Terms & Conditions'),
                 content: const Text(
                   'Please accept the terms and conditions to continue.'
@@ -165,11 +165,11 @@ class TeamViewScreen extends StatelessWidget {
                       Navigator.of(context).pop();
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => MissionScreen(), // replace with your screen
+                          builder: (_) => MissionScreen(imageUrl: imageUrl),
                         ),
                       );
                     },
-                    child: const Text('Accept', style: AppTextStyles.heading),
+                    child: Text('Accept', style: AppTextStyles.heading),
                   ),
                 ],
               ),
