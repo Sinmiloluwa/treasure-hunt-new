@@ -64,7 +64,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const WidgetTree()));
                   },
                   child: const Text('Continue with email',
                       style: TextStyle(color: Colors.white, fontSize: 16)),

@@ -1,11 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:treasure_hunt/constants/text_styles.dart';
 
-class MissionScreen extends StatelessWidget {
+class MissionScreen extends StatefulWidget {
   const MissionScreen({super.key, required this.imageUrl});
 
   final String imageUrl;
+
+  @override
+  State<MissionScreen> createState() => _MissionScreenState();
+}
+
+class _MissionScreenState extends State<MissionScreen> {
+  List<bool> completed = List.generate(7, (_) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +23,10 @@ class MissionScreen extends StatelessWidget {
           Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(20)),
                 child: CachedNetworkImage(
-                  imageUrl: imageUrl,
+                  imageUrl: widget.imageUrl,
                   height: 300,
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -59,9 +68,11 @@ class MissionScreen extends StatelessWidget {
                         const SizedBox(width: 10),
                         Row(
                           children: const [
-                            Icon(Icons.location_on, size: 16, color: Colors.white70),
+                            Icon(Icons.location_on,
+                                size: 16, color: Colors.white70),
                             SizedBox(width: 3),
-                            Text('Melbourne, Australia', style: AppTextStyles.body),
+                            Text('Melbourne, Australia',
+                                style: AppTextStyles.body),
                           ],
                         ),
                       ],
@@ -91,36 +102,132 @@ class MissionScreen extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        // ✅ Missions tab: scrollable list
-                        ListView.builder(
-                          padding: const EdgeInsets.all(8),
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              leading: const Icon(
-                                Icons.radio_button_unchecked,
-                                color: Colors.white70,
+                        Theme(
+                          data: Theme.of(context).copyWith(
+                            dividerColor: Colors.transparent,
+                          ),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                  padding: const EdgeInsets.all(8),
+                                  itemCount: 7,
+                                  itemBuilder: (context, index) {
+                                    bool isDone = completed[index];
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          completed[index] = !completed[index];
+                                        });
+                                      },
+                                      child: Opacity(
+                                        opacity: isDone ? 0.4 : 1.0,
+                                        child: ExpansionTile(
+                                          tilePadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8),
+                                          childrenPadding: EdgeInsets.zero,
+                                          collapsedShape:
+                                              const RoundedRectangleBorder(
+                                            side: BorderSide.none,
+                                          ),
+                                          shape: const RoundedRectangleBorder(
+                                            side: BorderSide.none,
+                                          ),
+                                          leading: Icon(
+                                            isDone
+                                                ? Icons.check_circle
+                                                : Icons.radio_button_unchecked,
+                                            color: isDone
+                                                ? Colors.grey
+                                                : const Color(0xFF933DFC),
+                                          ),
+                                          trailing: const Icon(
+                                            Icons.expand_more,
+                                            color: Color(0xFF933DFC),
+                                          ),
+                                          title: Text(
+                                            'Mission ${index + 1}',
+                                            style: AppTextStyles.body,
+                                          ),
+                                          subtitle: const Text(
+                                            'Status: Pending',
+                                            style: AppTextStyles.body,
+                                          ),
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(12.0),
+                                              child: Text(
+                                                'This is the full mission description for mission ${index + 1}.',
+                                                style:
+                                                    AppTextStyles.body.copyWith(
+                                                  color: isDone
+                                                      ? Colors.grey
+                                                      : Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                              title: Text(
-                                'Mission ${index + 1}: Description goes here',
-                                style: AppTextStyles.body,
+                              const SizedBox(height: 20),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () => showCustomPopup(context),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0xFF933DFC),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 20,
+                                          vertical: 10,
+                                        ),
+                                      ),
+                                      child: const Text(
+                                        "Finish",
+                                        style: AppTextStyles.body,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              subtitle: const Text(
-                                'Status: Incomplete',
-                                style: AppTextStyles.body,
-                              ),
-                            );
-                          },
+                            ],
+                          ),
                         ),
 
                         // Submissions tab
-                        const Center(
-                          child: Text('Submissions Content', style: AppTextStyles.body),
+                        MediaQuery.removePadding(
+                          context: context,
+                          removeTop: true,
+                          child: ListView.builder(
+                            itemCount: 2,
+                            itemBuilder: (context, index) {
+                              return ListTile(
+                                leading: const Icon(
+                                    Icons.subdirectory_arrow_right,
+                                    color: Color(0xFF933DFC)),
+                                title: Text('Submission ${index + 1}',
+                                    style: AppTextStyles.body),
+                                subtitle: const Text('Submitted on: 2024-01-01',
+                                    style: AppTextStyles.body),
+                              );
+                            },
+                          ),
                         ),
 
                         // Leaderboard tab
                         const Center(
-                          child: Text('Leaderboard Content', style: AppTextStyles.body),
+                          child: Text('Leaderboard Content',
+                              style: AppTextStyles.body),
                         ),
                       ],
                     ),
@@ -131,6 +238,79 @@ class MissionScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void showCustomPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap X to close
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Well Done!",
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.heading,
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "You've successfully completed the hunt. Keep an eye on your profile for updates on rewards and upcoming hunts!",
+                      textAlign: TextAlign.center,
+                      style: AppTextStyles.body,
+                    ),
+                    SvgPicture.asset(
+                      'assets/icons/splash.svg',
+                      width: 200, // optional
+                      height: 200, // optional
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF933DFC),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 12,
+                        ),
+                      ),
+                      child: const Text(
+                        "Ok",
+                        style: AppTextStyles.body,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              /// X Button
+              Positioned(
+                right: 0,
+                top: 0,
+                child: InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: const Padding(
+                    padding: EdgeInsets.all(12.0),
+                    child: Icon(Icons.close, size: 20),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -48,8 +48,8 @@ class _WidgetTreeState extends State<WidgetTree> {
         ),
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed, 
-          backgroundColor: const Color(0xFF0f1c22),
-          selectedItemColor: const Color(0xFF17a3eb),
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+          selectedItemColor: const Color(0xFF933DFC),
           unselectedItemColor: Colors.grey,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
