@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:treasure_hunt/constants/text_styles.dart';
+import 'package:treasure_hunt/screens/evidence_submission_screen.dart';
 
 class MissionScreen extends StatefulWidget {
   const MissionScreen({super.key, required this.imageUrl});
@@ -24,7 +25,7 @@ class _MissionScreenState extends State<MissionScreen> {
             children: [
               ClipRRect(
                 borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(20)),
+                    const BorderRadius.vertical(bottom: Radius.circular(20)),
                 child: CachedNetworkImage(
                   imageUrl: widget.imageUrl,
                   height: 300,
@@ -169,6 +170,28 @@ class _MissionScreenState extends State<MissionScreen> {
                                                 ),
                                               ),
                                             ),
+                                            const SizedBox(height: 10),
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        EvidenceSubmissionScreen(missionName: 'Mission ${index + 1}')
+                                                  ),
+                                                );
+                                              },
+                                              child: Text('Submit Evidence',
+                                                  style: AppTextStyles.body),
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    const Color(0xFF933DFC),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 20,
+                                                  vertical: 10,
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -215,7 +238,7 @@ class _MissionScreenState extends State<MissionScreen> {
                                 leading: const Icon(
                                     Icons.subdirectory_arrow_right,
                                     color: Color(0xFF933DFC)),
-                                title: Text('Submission ${index + 1}',
+                                title: Text('Mission ${index + 1}',
                                     style: AppTextStyles.body),
                                 subtitle: const Text('Submitted on: 2024-01-01',
                                     style: AppTextStyles.body),
