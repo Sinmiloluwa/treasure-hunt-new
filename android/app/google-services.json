@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "214371407592",
+    "project_id": "scavenger-hunt-dc807",
+    "storage_bucket": "scavenger-hunt-dc807.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214371407592:android:557d2c912dfd5c81cf1b5d",
+        "android_client_info": {
+          "package_name": "com.example.treasure_hunt_new"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD83XNkA6IsexmUmPngIb2i-NmKJpADdKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214371407592:android:9fad5476b5832e9bcf1b5d",
+        "android_client_info": {
+          "package_name": "com.sinmiloluwa.treasure_hunt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD83XNkA6IsexmUmPngIb2i-NmKJpADdKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
