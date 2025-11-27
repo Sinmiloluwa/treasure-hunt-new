@@ -176,7 +176,7 @@ class _MissionScreenState extends State<MissionScreen> {
                                                 Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                     builder: (_) =>
-                                                        EvidenceSubmissionScreen(missionName: 'Mission ${index + 1}')
+                                                        EvidenceSubmissionScreen(missionName: 'Mission ${index + 1}', missionImage: widget.imageUrl, description: 'Go to dugbe and take pictures of Cocoa House with the security',)
                                                   ),
                                                 );
                                               },
