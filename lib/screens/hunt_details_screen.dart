@@ -89,6 +89,7 @@ class _HuntDetailsScreenState extends State<HuntDetailsScreen> {
                               ),
                             ),
                             onPressed: () {
+                              Navigator.pop(context);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
