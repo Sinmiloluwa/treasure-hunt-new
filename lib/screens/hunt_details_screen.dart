@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:treasure_hunt/constants/text_styles.dart';
+import 'package:treasure_hunt/screens/single_view_screen.dart';
 import 'package:treasure_hunt/screens/team_view_screen.dart';
 import 'package:treasure_hunt/widgets/bottom_sheet.dart';
 
@@ -75,7 +76,10 @@ class _HuntDetailsScreenState extends State<HuntDetailsScreen> {
                             ),
                             onPressed: () {
                               Navigator.pop(context);
-                              // Navigate to single player mode
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return const SingleViewScreen();
+                              }));
                             },
                             child: const Text('Single', style: AppTextStyles.body,),
                           ),
