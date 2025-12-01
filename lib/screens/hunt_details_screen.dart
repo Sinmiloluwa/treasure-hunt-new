@@ -3,14 +3,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:treasure_hunt/constants/text_styles.dart';
+import 'package:treasure_hunt/screens/mission_screen.dart';
 import 'package:treasure_hunt/screens/single_view_screen.dart';
 import 'package:treasure_hunt/screens/team_view_screen.dart';
 import 'package:treasure_hunt/widgets/bottom_sheet.dart';
 
 class HuntDetailsScreen extends StatefulWidget {
-  const HuntDetailsScreen({super.key, required this.huntId});
+  const HuntDetailsScreen({super.key, required this.huntId, this.type, required this.imageUrl});
 
   final int huntId;
+  final String? type;
+  final String imageUrl;
 
   @override
   State<HuntDetailsScreen> createState() => _HuntDetailsScreenState();
@@ -78,7 +81,7 @@ class _HuntDetailsScreenState extends State<HuntDetailsScreen> {
                               Navigator.pop(context);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return const SingleViewScreen();
+                                return MissionScreen(imageUrl: widget.imageUrl);
                               }));
                             },
                             child: const Text('Single', style: AppTextStyles.body,),
@@ -111,7 +114,10 @@ class _HuntDetailsScreenState extends State<HuntDetailsScreen> {
                   )
                 );
               },
-              child: Text('Play game'),
+              child: Text(
+                widget.type == 'team' ? 'Join Team' :
+                'Join Hunt',
+                ),
             ),
           ),
         ),
