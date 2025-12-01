@@ -42,6 +42,7 @@ class LeaderboardScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 5,
                 itemBuilder: (context, index) {
+                  final image = 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
                   final DateTime completedDate = DateTime(2025, 5, 15);
 
                   final String status =
@@ -49,7 +50,7 @@ class LeaderboardScreen extends StatelessWidget {
                   return InkWell(
                     onTap: () => {
                       Navigator.push(context, 
-                      MaterialPageRoute(builder: (context) => HuntDetailsScreen(huntId: index + 1)
+                      MaterialPageRoute(builder: (context) => HuntDetailsScreen(huntId: index + 1, imageUrl: image)
                       ))
                     },
                     child: Padding(
