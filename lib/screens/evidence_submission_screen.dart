@@ -17,11 +17,12 @@ class EvidenceSubmissionScreen extends StatefulWidget {
   final String description;
 
   @override
-  State<EvidenceSubmissionScreen> createState() => _EvidenceSubmissionScreenState();
+  State<EvidenceSubmissionScreen> createState() =>
+      _EvidenceSubmissionScreenState();
 }
 
 class _EvidenceSubmissionScreenState extends State<EvidenceSubmissionScreen> {
-  List<XFile> selectedImages = [];    
+  List<XFile> selectedImages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -95,23 +96,29 @@ class _EvidenceSubmissionScreenState extends State<EvidenceSubmissionScreen> {
               },
             ),
             const SizedBox(height: 20),
-
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle submission logic here
-                },
-                style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF933DFC),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      elevation: 0,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: double.infinity, // makes the button full width
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle submission logic here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF933DFC),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                child: const Text('Submit Evidence', style: AppTextStyles.subheading),
+                    elevation: 0,
+                  ),
+                  child: const Text(
+                    'Submit Evidence',
+                    style: AppTextStyles.subheading,
+                  ),
+                ),
               ),
             ),
           ],
