@@ -3,6 +3,8 @@
         android:label="Scavenger Hunt"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+        <uses-permission android:name="android.permission.CAMERA" />
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyBsOmDmGIhNPlhiGklYMDq7b7C-4FlKRpU"/>
         <activity
