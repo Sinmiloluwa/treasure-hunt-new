@@ -118,81 +118,64 @@ class _MissionScreenState extends State<MissionScreen> {
 
                                     return GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          completed[index] = !completed[index];
-                                        });
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EvidenceSubmissionScreen(
+                                                  missionName: 'Mission ${index + 1}',
+                                                  missionImage: widget.imageUrl,
+                                                  description: 'This mission is for ${index + 1}',
+                                            ),
+                                          ),
+                                        );
+                                        // setState(() {
+                                        //   completed[index] = !completed[index];
+                                        // });
                                       },
                                       child: Opacity(
                                         opacity: isDone ? 0.4 : 1.0,
-                                        child: ExpansionTile(
-                                          tilePadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 8),
-                                          childrenPadding: EdgeInsets.zero,
-                                          collapsedShape:
-                                              const RoundedRectangleBorder(
-                                            side: BorderSide.none,
-                                          ),
-                                          shape: const RoundedRectangleBorder(
-                                            side: BorderSide.none,
-                                          ),
-                                          leading: Icon(
-                                            isDone
-                                                ? Icons.check_circle
-                                                : Icons.radio_button_unchecked,
-                                            color: isDone
-                                                ? Colors.grey
-                                                : const Color(0xFF933DFC),
-                                          ),
-                                          trailing: const Icon(
-                                            Icons.expand_more,
-                                            color: Color(0xFF933DFC),
-                                          ),
-                                          title: Text(
-                                            'Mission ${index + 1}',
-                                            style: AppTextStyles.body,
-                                          ),
-                                          subtitle: const Text(
-                                            'Status: Pending',
-                                            style: AppTextStyles.body,
-                                          ),
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Text(
-                                                'This is the full mission description for mission ${index + 1}.',
-                                                style:
-                                                    AppTextStyles.body.copyWith(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 4.0, horizontal: 12.0),
+                                          child: ListTile(
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                              vertical: 4,
+                                              horizontal: 12,
+                                            ),
+
+                                            // LEADING (your two icons)
+                                            leading: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(
+                                                  isDone
+                                                      ? Icons.check_circle
+                                                      : Icons
+                                                          .radio_button_unchecked,
                                                   color: isDone
                                                       ? Colors.grey
-                                                      : Colors.white,
+                                                      : const Color(0xFF933DFC),
                                                 ),
-                                              ),
+
+                                              ],
                                             ),
-                                            const SizedBox(height: 10),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        EvidenceSubmissionScreen(missionName: 'Mission ${index + 1}', missionImage: widget.imageUrl, description: 'Go to dugbe and take pictures of Cocoa House with the security',)
-                                                  ),
-                                                );
-                                              },
-                                              child: Text('Submit Evidence',
-                                                  style: AppTextStyles.body),
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    const Color(0xFF933DFC),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  horizontal: 20,
-                                                  vertical: 10,
-                                                ),
-                                              ),
+
+                                            // TITLE (anything you want)
+                                            title: Text(
+                                              "This mission is for ${index + 1}",
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16),
                                             ),
-                                          ],
+
+                                            // TRAILING (optional)
+                                            trailing: Icon(
+                                              Icons.chevron_right,
+                                              color: Colors.white54,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     );
